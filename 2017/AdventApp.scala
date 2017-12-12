@@ -18,14 +18,6 @@ abstract class AdventApp {
   def readline (file :String) :String =
     Source.fromFile(file).getLines().next.stripLineEnd
 
-  /** Reads the first line from the supplied source file and splits on `,`. */
-  def readwords (file :String) :List[String] =
-    readline(file).split(',').map(n => n.slice(1, n.length-1)).toList.sortWith(_<_)
-
-  /** Reads the first line from the supplied source file, splits on `,` and `toInt`s. */
-  def readnums (file :String) :List[Int] =
-    readline(file).split(',').toList.map(_.toInt)
-
   /** Reads all lines from the supplied source file, stripping line endings. */
   def readlines (file :String) :Iterator[String] =
     Source.fromFile(file).getLines().map(_.stripLineEnd)
