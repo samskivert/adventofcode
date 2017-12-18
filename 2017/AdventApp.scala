@@ -26,7 +26,7 @@ abstract class AdventApp {
   def answer :Any
 
   /** The main entry point for an Advent solution. Just calls `answer`. */
-  def main (args :Array[String]) {
+  def main (args :Array[String]) :Unit = {
     println(answer)
   }
 }
