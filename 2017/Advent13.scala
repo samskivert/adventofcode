@@ -6,10 +6,9 @@ object Advent13 extends AdventApp {
   // scanner, the period being 2*(range-1); we enter a layer at `pos` at either time=pos or
   // time=pos+delay, so the probe function takes a delay and returns the layer range if caught,
   // zero otherwise
-  val empty = (delay :Int) => 0
-  def probe (pos :Int, range :Int) =
-    (delay :Int) => if ((pos+delay) % ((range-1)*2) == 0) range else 0
-  val probes = 0 to layers.keys.max map(pos => layers.get(pos).map(probe(pos, _)) getOrElse empty)
+  def empty (delay :Int) = 0
+  def probe (pos :Int)(range :Int)(delay :Int) = if ((pos+delay) % ((range-1)*2) == 0) range else 0
+  val probes = 0 to layers.keys.max map(pos => layers get(pos) map(probe(pos)) getOrElse empty)
 
   def barge = probes.map(p => p(0)).zipWithIndex.map(si => si._1*si._2).sum
   def sneak (delay :Int) :Int = if (probes.exists(p => p(delay) > 0)) sneak(delay+1) else delay
