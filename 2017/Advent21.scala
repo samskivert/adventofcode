@@ -27,7 +27,7 @@ object Advent21 extends AdventApp {
   }
 
   def start = Array(".#.", "..#", "###").map(_.toCharArray)
-  def pop (grid :Grid) = grid map(_.count(_ == '#')) sum
   def iter (iters :Int) = (start /: (0 until iters))((g, _) => evolve(g))
+  def pop (grid :Grid) = grid map(_.count(_ == '#')) sum
   def answer = (pop(iter(5)), pop(iter(18)))
 }
