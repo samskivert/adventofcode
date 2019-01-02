@@ -17,7 +17,7 @@ object Advent22 extends AdventApp {
                      Set(Torch, Nada)) // Narrow
 
   def search = {
-    var search = scala.collection.mutable.PriorityQueue((0, 0, 0, Torch))(
+    val search = scala.collection.mutable.PriorityQueue((0, 0, 0, Torch))(
       Ordering.fromLessThan((a, b) => b._1 < a._1))
     val costs = scala.collection.mutable.Map[(Int,Int,Tool),Int]()
     var tcost = 0xFFFF
