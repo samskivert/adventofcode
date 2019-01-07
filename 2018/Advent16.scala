@@ -50,6 +50,6 @@ object Advent16 extends AdventApp {
     known
   }
 
-  def answer = (samples count { case (b, i, a) => ops.filter(testOp(b, i, a)).size >= 3 },
+  def answer = (samples map(testOp) count { op => ops.filter(op).size >= 3 },
                 (new Array[Int](4) /: testInsts)((r, ins) => exec(opsByCode(ins(0)), r, ins))(0))
 }

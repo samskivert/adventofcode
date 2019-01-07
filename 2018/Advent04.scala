@@ -1,7 +1,7 @@
 object Advent04 extends AdventApp {
   case class Day (id :Int, sleeps :Seq[(Int,Int)]) {
     def apply (sched :Array[Int]) = sleeps foreach {
-      case (start, end) => (start until end) foreach { min => sched(min) += 1 }
+      (start, end) => (start until end) foreach { min => sched(min) += 1 }
     }
   }
 
@@ -20,7 +20,7 @@ object Advent04 extends AdventApp {
   days foreach { day => day.apply(guards(day.id)) }
 
   def find (p :Array[Int] => Int) = {
-    val (sid, ssched) = (guards.maxBy { case (id, sched) => p(sched) })
+    val (sid, ssched) = guards.maxBy((_, sched) => p(sched))
     val smin = (0 to 59) maxBy { min => ssched(min) }
     sid * smin
   }
