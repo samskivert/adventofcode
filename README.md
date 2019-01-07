@@ -1,11 +1,17 @@
 # Advent of Code
 
-Solutions to [Advent of Code] problems. 2017 is all done in Scala, but I aspire to do 2018's
-problems in [Compose].
+Solutions to [Advent of Code] problems. 2017 and 2018 are all done in Scala (technically in
+[Dotty]). I vaguely aspired to do 2018 in [Compose], but that didn't happen. I much more strongly
+aspire to do 2019 in Compose.
 
-If for some strange reason you want to actually run them, make sure [Scala 2.12] is on your path
-(`scala` and `scalac`) and then `./run.sh d` in some year directory `y` for some problem day `d`.
+If for some strange reason you want to actually run them, install [Dotty] and then use the `run.sh`
+script in the `2017` or `2018` directories to run any given day. For example:
+
+```
+cd 2017
+./run.sh 8
+```
 
 [Advent of Code]: https://adventofcode.com
 [Compose]: https://github.com/samskivert/compose
-[Scala 2.12]: http://scala-lang.org/download/2.12.0.html
+[Dotty]: https://dotty.epfl.ch/
