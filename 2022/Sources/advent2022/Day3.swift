@@ -16,8 +16,7 @@ struct Day3 : Day {
         left.first(where: { right.contains($0) }) ?? "🤔"
     }
     func priority (_ c :Character) -> Int {
-        if let v = c.asciiValue { return (Int)(v >= 97 ? v - 96 : (v - 38))  }
-        else { return 0 }
+        c.asciiValue.map({ v in (Int)(v >= 97 ? v - 96 : (v - 38)) }) ?? 0
     }
 
     func part1 () throws -> Int { try readInput(3).map(split).map(mispacked).map(priority).reduce(0, +) }

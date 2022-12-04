@@ -1,59 +1,51 @@
 struct Day2 : Day {
+    let sampleInput = ["A Y", "B X", "C Z"];
+
     enum ParseError : Error {
         case InvalidToken (_ text :Substring)
     }
+    typealias Parser<A> = (Substring) throws -> A
 
-    enum Play :Int {
+    enum Play :Int, CaseIterable {
         case Rock = 1, Paper = 2, Scissors = 3
+        func beats (_ p :Play) -> Bool { Play.allCases[self.rawValue % Play.allCases.count] == p }
+        func score (_ p :Play) -> Int { self.beats(p) ? 6 : p.beats(self) ? 0 : 3 }
     }
-    func toPlay (_ token :Substring) throws -> Play {
-        switch token {
+    let toPlay :Parser<Play> = {
+        switch $0 {
         case "A", "X": return .Rock
         case "B", "Y": return .Paper
         case "C", "Z": return .Scissors
-        default: throw ParseError.InvalidToken(token)
+        default: throw ParseError.InvalidToken($0)
         }
     }
 
     enum Action { 
         case Win, Lose, Draw
     }
-    func toAction (_ token :Substring) throws -> Action {
-        switch token {
-        case "X": return .Lose
-        case "Y": return .Draw
-        case "Z": return .Win
-        default: throw ParseError.InvalidToken(token)
+    let toAction :Parser<Action> = {
+        switch $0 {
+            case "X": return .Lose
+            case "Y": return .Draw
+            case "Z": return .Win
+            default: throw ParseError.InvalidToken($0)
         }
+    }
+    
+    func readStrategy<A, B> (_ input :[String], _ cvt1 :Parser<A>, _ cvt2 :Parser<B>) throws -> [(A, B)] {
+        try input.map({ $0.split(separator: " ") }).map({ (try cvt1($0[0]), try cvt2($0[1])) })
     }
 
-    let sampleInput = ["A Y", "B X", "C Z"];
-    func readStrategy<A, B> (_ cvt1 :(Substring) throws -> A, _ cvt2 :(Substring) throws -> B) throws -> [(A, B)] {
-        // let lines = sampleInput 
-        let lines = try readInput(2)
-        return try lines.map { line in
-            let tokens = line.split(separator: " ")
-            return (try cvt1(tokens[0]), try cvt2(tokens[1]))
-        }
-    }
-
-    func playScore (_ p1 :Play, _ p2 :Play) -> Int {
-        switch p2 {
-        case .Rock: return p1 == .Paper ? 0 : p1 == .Scissors ? 6 : 3
-        case .Paper: return p1 == .Scissors ? 0 : p1 == .Rock ? 6 : 3
-        case .Scissors: return p1 == .Rock ? 0 : p1 == .Paper ? 6 : 3
-        }
-    }
-    func score1 (_ p1 :Play, _ p2 :Play) -> Int { playScore(p1, p2) + p2.rawValue }
-    func part1 () throws -> Int { try readStrategy(toPlay, toPlay).map(score1).reduce(0, +) }
+    func score1 (_ p1 :Play, _ p2 :Play) -> Int { p1.score(p2) + p2.rawValue }
+    func part1 () throws -> Int { try readStrategy(readInput(2), toPlay, toPlay).map(score1).reduce(0, +) }
 
     func pickAction (_ p1 :Play, _ a2 :Action) -> Play {
         switch a2 {
-        case .Win: return p1 == .Rock ? .Paper : p1 == .Paper ? .Scissors : .Rock
-        case .Lose: return p1 == .Rock ? .Scissors : p1 == .Paper ? .Rock : .Paper
+        case .Win: return Play.allCases[p1.rawValue % Play.allCases.count]
+        case .Lose: return Play.allCases[(p1.rawValue + 1) % Play.allCases.count]
         case .Draw: return p1
         }
     }
     func score2 (_ p1 :Play, a2 :Action) -> Int { score1(p1, pickAction(p1, a2)) }
-    func part2 () throws -> Int { try readStrategy(toPlay, toAction).map(score2).reduce(0, +) }
+    func part2 () throws -> Int { try readStrategy(readInput(2), toPlay, toAction).map(score2).reduce(0, +) }
 }
