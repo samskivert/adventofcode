@@ -1,14 +1,14 @@
 import ArgumentParser
 
 protocol Day {
-    func part1 () throws -> Int
-    func part2 () throws -> Int
+    func part1 () throws -> String
+    func part2 () throws -> String
 }
 
 @main
 struct Advent2022 : ParsableCommand {
     @Argument(help: "The number of the day to run.")
-    var day :Int = 4
+    var day :Int = 5
 
     mutating func run () throws {
         switch day {
@@ -16,6 +16,7 @@ struct Advent2022 : ParsableCommand {
         case 2: try compute(day, Day2())
         case 3: try compute(day, Day3())
         case 4: try compute(day, Day4())
+        case 5: try compute(day, Day5())
         default:    
             print("No solution for day \(day) yet.")
         }

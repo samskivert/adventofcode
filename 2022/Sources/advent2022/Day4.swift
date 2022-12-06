@@ -20,11 +20,11 @@ struct Day4 : Day {
     func subsumes (_ r1 :(Int, Int), _ r2: (Int, Int)) -> Bool { 
         (r1.0 <= r2.0 && r1.1 >= r2.1) || (r2.0 <= r1.0 && r2.1 >= r1.1)
     }
-    func part1 () throws -> Int { try readInput(4).map(parse).filter(subsumes).count }
+    func part1 () throws -> String { String(try readInput(4).map(parse).filter(subsumes).count) }
 
     func contains (_ r :(Int, Int), _ n :Int) -> Bool { r.0 <= n && r.1 >= n }
     func overlaps (_ r1 :(Int, Int), _ r2: (Int, Int)) -> Bool {
         contains(r1, r2.0) || contains(r1, r2.1) || contains(r2, r1.0) || contains(r2, r1.1)
     }
-    func part2 () throws -> Int { try readInput(4).map(parse).filter(overlaps).count }
+    func part2 () throws -> String { String(try readInput(4).map(parse).filter(overlaps).count) }
 }

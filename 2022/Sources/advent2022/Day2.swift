@@ -37,7 +37,7 @@ struct Day2 : Day {
     }
 
     func score1 (_ p1 :Play, _ p2 :Play) -> Int { p1.score(p2) + p2.rawValue }
-    func part1 () throws -> Int { try readStrategy(readInput(2), toPlay, toPlay).map(score1).reduce(0, +) }
+    func part1 () throws -> String { String(try readStrategy(readInput(2), toPlay, toPlay).map(score1).reduce(0, +)) }
 
     func pickAction (_ p1 :Play, _ a2 :Action) -> Play {
         switch a2 {
@@ -47,5 +47,5 @@ struct Day2 : Day {
         }
     }
     func score2 (_ p1 :Play, a2 :Action) -> Int { score1(p1, pickAction(p1, a2)) }
-    func part2 () throws -> Int { try readStrategy(readInput(2), toPlay, toAction).map(score2).reduce(0, +) }
+    func part2 () throws -> String { String(try readStrategy(readInput(2), toPlay, toAction).map(score2).reduce(0, +)) }
 }

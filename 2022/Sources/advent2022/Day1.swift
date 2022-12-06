@@ -10,11 +10,11 @@ struct Day1 : Day {
         })
     }
 
-    func part1 () throws -> Int { try readElves().max()! }
+    func part1 () throws -> String { String(try readElves().max()!) }
 
-    func part2 () throws -> Int { 
+    func part2 () throws -> String { 
         var elves = try readElves()
         elves.sort(by: >)
-        return elves.prefix(3).reduce(0, +)
+        return String(elves.prefix(3).reduce(0, +))
      }
 }
