@@ -2,7 +2,7 @@ struct Day9 : Day {
     let sampleInput = ["R 4", "U 4", "L 3", "D 1", "R 4", "D 1", "L 5", "R 2"]
     let sampleInput2 = ["R 5", "U 8", "L 8", "D 3", "R 17", "D 10", "L 25", "U 20"]
     func parse (_ input :[String]) -> [(Character, Int)] { input.map { line in
-        (line[line.startIndex], Int(line.suffix(from: line.index(line.startIndex, offsetBy: 2)))!)
+        (line[line.startIndex], Int(line.dropFirst(2))!)
     }}
 
     struct Knot :Hashable {
