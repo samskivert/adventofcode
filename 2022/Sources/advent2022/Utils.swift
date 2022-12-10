@@ -1,7 +1,11 @@
 import Foundation
 
-func readInput (_ day :Int) throws -> [String] {
-    let data = try String(contentsOfFile: "Input/day\(day).txt", encoding: .utf8)
+func readExample (_ day :Int) throws -> [String] { try readFile("Input/example\(day).txt") }
+
+func readInput (_ day :Int) throws -> [String] { try readFile("Input/day\(day).txt") }
+
+func readFile (_ path :String) throws -> [String] {
+    let data = try String(contentsOfFile: path, encoding: .utf8)
     var lines = data.components(separatedBy: .newlines)
     if (lines.last == "") { lines.removeLast() } // trim trailing newline
     return lines
