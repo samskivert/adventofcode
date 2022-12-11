@@ -1,6 +1,6 @@
 import Foundation
 struct Day11 : Day {
-    
+
     let pattern = #"""
         Monkey (\d+):
           Starting items: (.*)

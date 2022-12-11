@@ -25,7 +25,7 @@ struct Day3 : Day {
         sacks[0].first(where: { c in sacks.suffix(from: 1).allSatisfy({ $0.contains(c) }) }) ?? "🤔"
     }
 
-    func part2 () throws -> String { 
+    func part2 () throws -> String {
         String(try readInput(3).map({ Set($0) }).chunked(by: 3).map(badge).map(priority).reduce(0, +))
     }
 }

@@ -67,7 +67,7 @@ struct Day7 : Day {
         }
     }
 
-    func part1 () throws -> String { 
+    func part1 () throws -> String {
         var root = Directory()
         parseInput(&root, try readInput(7))
         return String(root.reduceDirs(0, { (tot, dir) in
@@ -76,7 +76,7 @@ struct Day7 : Day {
             else { return tot }
         }))
     }
-    
+
     func part2 () throws -> String {
         var root = Directory()
         parseInput(&root, try readInput(7))

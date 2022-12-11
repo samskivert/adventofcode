@@ -8,7 +8,7 @@ struct Day1 : Day {
 
     func part1 () throws -> String { String(try readElves(try readInput(1)).max()!) }
 
-    func part2 () throws -> String { 
+    func part2 () throws -> String {
         var elves = try readElves(try readInput(1))
         elves.sort(by: >)
         return String(elves.prefix(3).reduce(0, +))

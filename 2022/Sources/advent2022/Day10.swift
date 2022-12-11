@@ -11,21 +11,21 @@ struct Day10 : Day {
                 reg += Int(line.dropFirst(5))!
                 cycle += 1
             }
-            sampler(cycle, reg)   
+            sampler(cycle, reg)
         }
     }
 
     func part1 () throws -> String {
         var signal = 0
-        execute(try readInput(10), { (cycle, reg) in 
+        execute(try readInput(10), { (cycle, reg) in
             if (cycle-20) % 40 == 0 { signal += cycle*reg }
         })
         return String(signal)
     }
 
-    func part2 () throws -> String { 
+    func part2 () throws -> String {
         var lines = [String]()
-        execute(try readInput(10), { (cycle, reg) in 
+        execute(try readInput(10), { (cycle, reg) in
             let line = (cycle-1) / 40
             if line >= lines.count { lines.append(String()) }
             let col = (cycle-1) % 40

@@ -20,7 +20,7 @@ struct Day2 : Day {
         }
     }
 
-    enum Action { 
+    enum Action {
         case Win, Lose, Draw
     }
     let toAction :Parser<Action> = {
@@ -31,7 +31,7 @@ struct Day2 : Day {
             default: throw ParseError.InvalidToken($0)
         }
     }
-    
+
     func readStrategy<A, B> (_ input :[String], _ cvt1 :Parser<A>, _ cvt2 :Parser<B>) throws -> [(A, B)] {
         try input.map({ $0.split(separator: " ") }).map({ (try cvt1($0[0]), try cvt2($0[1])) })
     }
