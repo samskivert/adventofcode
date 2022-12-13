@@ -13,7 +13,9 @@ struct Day12 : Day {
         let row, col :Int
         func hash (into :inout Hasher) { into.combine(row) ; into.combine(col) }
         func get (_ grid :[[Character]]) -> Character { grid[row][col] }
-        var neighbors :[Pos] { ndeltas.map { Pos(row: row+$0.0, col: col+$0.1) }}
+        func onNeighbors (op :(Pos) -> Void) {
+            for (dr, dc) in ndeltas { op(Pos(row: row+dr, col: col+dc)) }
+        }
         static func == (a: Pos, b: Pos) -> Bool { return a.row == b.row && a.col == b.col }
     }
     static let ndeltas = [(-1, 0), (0, -1), (1, 0), (0, 1)]
@@ -33,10 +35,10 @@ struct Day12 : Day {
             let (pos, dist) = scan.removeFirst()
             if pos == end { return dist }
             let h = height(elev, pos), ndist = dist+1
-            for npos in pos.neighbors {
-                if npos.row < 0 || npos.col < 0 || npos.row >= gheight || npos.col >= gwidth { continue }
-                if height(elev, npos) - h > 1 { continue }
-                if let odist = minDist[npos], odist <= ndist { continue }
+            pos.onNeighbors { npos in
+                if npos.row < 0 || npos.col < 0 || npos.row >= gheight || npos.col >= gwidth { return }
+                if height(elev, npos) - h > 1 { return }
+                if let odist = minDist[npos], odist <= ndist { return }
                 minDist[npos] = ndist
                 scan.insertSorted((npos, ndist), { (a, b) in a.1 < b.1 })
             }
