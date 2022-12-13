@@ -21,4 +21,19 @@ extension Array {
         }
         return array
     }
+
+    @discardableResult mutating func insertSorted (_ item :Element, _ lessThan :(Element, Element) -> Bool) -> Int {
+        var lo = 0, hi = self.count - 1
+        while lo <= hi {
+            let mid = (lo + hi)/2
+            if lessThan(self[mid], item) { lo = mid + 1 }
+            else if lessThan(item, self[mid]) { hi = mid - 1 }
+            else {
+                self.insert(item, at: mid)
+                return mid
+            }
+        }
+        self.insert(item, at: lo)
+        return lo
+    }
 }
