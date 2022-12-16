@@ -95,7 +95,7 @@ struct Day15 : Day {
         let max = 4000000
         for y in 0 ... max {
             var sparse = SparseRange()
-            for s in sensors { s.addTo(&sparse, y) }
+            var ii = 0 ; let ll = sensors.count ; while (ii < ll) { sensors[ii].addTo(&sparse, y) ; ii += 1 }
             let x = sparse.firstGap
             if x >= 0 && x <= max { return String(x * 4000000 + y) }
         }
