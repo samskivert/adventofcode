@@ -4,44 +4,50 @@ struct Day15 : Day {
     struct Sensor {
         let sx :Int, sy :Int
         let bx :Int, by :Int
+        let range :Int
 
-        var range :Int { abs(bx-sx) + abs(by-sy) }
+        init (_ sx :Int, _ sy :Int, _ bx :Int, _ by :Int) {
+            self.sx = sx ; self.sy = sy
+            self.bx = bx ; self.by = by
+            range = abs(bx-sx) + abs(by-sy)
+        }
+
         func addTo (_ sparse :inout SparseRange, _ y :Int) {
             let xrange = range - abs(y-sy)
-            if xrange >= 0 { sparse.add((sx-xrange)...(sx+xrange)) }
+            if xrange >= 0 { sparse.add(sx-xrange, sx+xrange) }
         }
     }
 
     struct SparseRange {
-        var bounds = 0...0
-        var spill = 0...0
+        var boundsL = 0, boundsU = 0
+        var spillL = 0, spillU = 0
         var count = 0
 
-        var covered :Int { span(bounds) + (count > 1 ? span(spill) : 0) }
-        var firstGap :Int { count < 2 ? -1 : bounds.upperBound+1 }
+        var covered :Int { span(boundsL, boundsU) + (count > 1 ? span(spillL, spillU) : 0) }
+        var firstGap :Int { count < 2 ? -1 : boundsU+1 }
 
-        mutating func add (_ range :ClosedRange<Int>) {
+        mutating func add (_ l :Int, _ u :Int) {
             if count == 0 {
-                bounds = range
+                boundsL = l ; boundsU = u
                 count = 1
-            } else if shouldMerge(bounds, range) {
-                bounds = merge(bounds, range)
-                if count == 2 && shouldMerge(bounds, spill) {
-                    bounds = merge(bounds, spill)
+            } else if shouldMerge(boundsL, boundsU, l, u) {
+                merge(&boundsL, &boundsU, l, u)
+                if count == 2 && shouldMerge(boundsL, boundsU, spillL, spillU) {
+                    merge(&boundsL, &boundsU, spillL, spillU)
                     count = 1
                 }
             } else if count == 1 {
-                if range.lowerBound < bounds.lowerBound {
-                    spill = bounds
-                    bounds = range
+                if l < boundsL {
+                    spillL = boundsL ; spillU = boundsU
+                    boundsL = l ; boundsU = u
                 } else {
-                    spill = range
+                    spillL = l ; spillU = u
                 }
                 count = 2
-            } else if (shouldMerge(spill, range)) {
-                spill = merge(spill, range)
-                if count == 2 && shouldMerge(bounds, spill) {
-                    bounds = merge(bounds, spill)
+            } else if (shouldMerge(spillL, spillU, l, u)) {
+                merge(&spillL, &spillU, l, u)
+                if count == 2 && shouldMerge(boundsL, boundsU, spillL, spillU) {
+                    merge(&boundsL, &boundsU, spillL, spillU)
                     count = 1
                 }
             } else {
@@ -49,14 +55,15 @@ struct Day15 : Day {
             }
         }
 
-        func contains (_ x :Int) -> Bool { bounds.contains(x) || (count > 1 && spill.contains(x)) }
+        func contains (_ x :Int) -> Bool { contains(boundsL, boundsU, x) || (count > 1 && contains(spillL, spillU, x)) }
 
-        private func span (_ b :ClosedRange<Int>) -> Int { b.upperBound - b.lowerBound + 1 }
-        private func shouldMerge (_ a :ClosedRange<Int>, _ b : ClosedRange<Int>) -> Bool {
-            a.overlaps(b) || (a.upperBound+1 == b.lowerBound)
-        }
-        private func merge (_ a :ClosedRange<Int>, _ b :ClosedRange<Int>) -> ClosedRange<Int> {
-            min(a.lowerBound, b.lowerBound) ... max(a.upperBound, b.upperBound)
+        private func span (_ bl :Int, _ bu :Int) -> Int { bu - bl + 1 }
+        private func contains (_ al :Int, _ au :Int, _ v :Int) -> Bool { al <= v && au >= v }
+        private func overlaps (_ al :Int, _ au :Int, _ bl :Int, _ bu :Int) -> Bool { contains(al, au, bl) || contains(bl, bu, au) }
+        private func shouldMerge (_ al :Int, _ au :Int, _ bl :Int, _ bu :Int) -> Bool { overlaps(al, au, bl, bu) || (au+1 == bl) }
+        private func merge (_ al :inout Int, _ au :inout Int, _ bl :Int, _ bu :Int) {
+            al = min(al, bl)
+            au = max(au, bu)
         }
     }
 
@@ -65,9 +72,9 @@ struct Day15 : Day {
         let regex = try NSRegularExpression(pattern: pattern)
         let nsrange = NSRange(input.startIndex ..< input.endIndex, in: input)
         let matches = regex.matches(in: input, options: [], range: nsrange)
-        guard let match = matches.first else { return Sensor(sx: 0, sy: 0, bx: 0, by: 0) }
+        guard let match = matches.first else { return Sensor(0, 0, 0, 0) }
         func group (_ num :Int) -> Int { Int(input[Range(match.range(at: num), in: input)!])! }
-        return Sensor(sx: group(1), sy: group(2), bx: group(3), by: group(4))
+        return Sensor(group(1), group(2), group(3), group(4))
     }
 
     func part1 () throws -> String {
