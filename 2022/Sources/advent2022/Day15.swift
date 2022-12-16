@@ -13,43 +13,49 @@ struct Day15 : Day {
     }
 
     struct SparseRange {
-        var bounds = [ClosedRange<Int>]()
+        var bounds = 0...0
+        var spill = 0...0
+        var count = 0
 
-        var covered :Int { bounds.map({ $0.upperBound - $0.lowerBound + 1 }).reduce(0, +) }
-        var firstGap :Int { bounds.count > 1 ? bounds[0].upperBound+1 : -1 }
+        var covered :Int { span(bounds) + (count > 1 ? span(spill) : 0) }
+        var firstGap :Int { count < 2 ? -1 : bounds.upperBound+1 }
 
         mutating func add (_ range :ClosedRange<Int>) {
-            for ii in bounds.indices {
-                let b = bounds[ii]
-                if shouldMerge(b, range) {
-                    bounds[ii] = merge(b, range)
-                    mergeAll()
-                    return
+            if count == 0 {
+                bounds = range
+                count = 1
+            } else if shouldMerge(bounds, range) {
+                bounds = merge(bounds, range)
+                if count == 2 && shouldMerge(bounds, spill) {
+                    bounds = merge(bounds, spill)
+                    count = 1
                 }
-            }
-            bounds.append(range)
-        }
-
-        mutating func mergeAll () {
-            var ii = 0
-            while ii < bounds.count-1 {
-                if shouldMerge(bounds[ii], bounds[ii+1]) {
-                    bounds[ii] = merge(bounds[ii], bounds[ii+1])
-                    bounds.remove(at: ii+1)
+            } else if count == 1 {
+                if range.lowerBound < bounds.lowerBound {
+                    spill = bounds
+                    bounds = range
+                } else {
+                    spill = range
                 }
-                ii += 1
+                count = 2
+            } else if (shouldMerge(spill, range)) {
+                spill = merge(spill, range)
+                if count == 2 && shouldMerge(bounds, spill) {
+                    bounds = merge(bounds, spill)
+                    count = 1
+                }
+            } else {
+                print("OVERFLOW!")
             }
         }
 
-        func contains (_ x :Int) -> Bool {
-            for b in bounds { if b.contains(x) { return true }}
-            return false
-        }
+        func contains (_ x :Int) -> Bool { bounds.contains(x) || (count > 1 && spill.contains(x)) }
 
-        func shouldMerge (_ a :ClosedRange<Int>, _ b : ClosedRange<Int>) -> Bool {
+        private func span (_ b :ClosedRange<Int>) -> Int { b.upperBound - b.lowerBound + 1 }
+        private func shouldMerge (_ a :ClosedRange<Int>, _ b : ClosedRange<Int>) -> Bool {
             a.overlaps(b) || (a.upperBound+1 == b.lowerBound)
         }
-        func merge (_ a :ClosedRange<Int>, _ b :ClosedRange<Int>) -> ClosedRange<Int> {
+        private func merge (_ a :ClosedRange<Int>, _ b :ClosedRange<Int>) -> ClosedRange<Int> {
             min(a.lowerBound, b.lowerBound) ... max(a.upperBound, b.upperBound)
         }
     }
@@ -65,7 +71,8 @@ struct Day15 : Day {
     }
 
     func part1 () throws -> String {
-        let sensors = try readInput(15).map(parse)
+        var sensors = try readInput(15).map(parse)
+        sensors.sort(by: { $0.sx < $1.sx })
         let y = 2000000
         var sparse = SparseRange()
         for s in sensors { s.addTo(&sparse, y) }
@@ -76,7 +83,8 @@ struct Day15 : Day {
     }
 
     func part2 () throws -> String {
-        let sensors = try readInput(15).map(parse)
+        var sensors = try readInput(15).map(parse)
+        sensors.sort(by: { $0.sx < $1.sx })
         let max = 4000000
         for y in 0 ... max {
             var sparse = SparseRange()
