@@ -8,7 +8,7 @@ protocol Day {
 @main
 struct Advent2022 : ParsableCommand {
     @Argument(help: "The number of the day to run.")
-    var day :Int = 16
+    var day :Int = 17
 
     mutating func run () throws {
         switch day {
@@ -28,6 +28,7 @@ struct Advent2022 : ParsableCommand {
         case 14: try compute(day, Day14())
         case 15: try compute(day, Day15())
         case 16: try compute(day, Day16())
+        case 17: try compute(day, Day17())
         default:
             print("No solution for day \(day) yet.")
         }
