@@ -11,6 +11,14 @@ func readFile (_ path :String) throws -> [String] {
     return lines
 }
 
+extension String {
+
+    func firstIndexInt (of c :Character) -> Int? {
+        if let idx = self.firstIndex(of: c) { return self.distance(from: self.startIndex, to: idx) }
+        else { return nil }
+    }
+}
+
 extension Array {
 
     func chunked (by distance: Int) -> [[Element]] {
