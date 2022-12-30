@@ -1,0 +1,10 @@
+.DS_Store
+.bloop
+.bsp
+.metals
+metals
+project/metals.sbt
+project/project/
+project/target/
+target/
+src/resources/input*
