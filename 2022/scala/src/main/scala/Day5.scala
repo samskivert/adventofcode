@@ -1,10 +1,8 @@
 object Day5 extends Day(5):
 
   def execute (input :Seq[String])(move :(Array[List[Char]], Int, Int, Int) => Unit) =
-    val stacks = Array.tabulate(1+input(0).length/4) { _ => List[Char]() }
-    for (line <- input.takeWhile(_.contains("[")) ;
-         (ii, cc) <- stacks.indices.map(ii => (ii, line(4*ii+1))) if cc != ' ')
-      stacks(ii) :+= cc
+    val stacks = input.takeWhile(_.contains("[")).transpose.zipWithIndex.
+      filter((_, ii) => ii%4 == 1).map(_._1.filter(_ != ' ').toList).toArray
     for (Array(_, cc, _, ss, _, dd) <- input.filter(_.startsWith("move ")).map(_.split(" ")))
       move(stacks, cc.toInt, ss.toInt-1, dd.toInt-1)
     stacks.map(_.head).mkString("")

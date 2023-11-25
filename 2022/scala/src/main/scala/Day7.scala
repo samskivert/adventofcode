@@ -24,11 +24,10 @@ object Day7 extends Day(7):
           state
       }
 
-  override def answer1 (input :Seq[String]) =
-    Directory(input).foldDirs(0) { (tot, dir) =>
-      val size = dir.size
-      if (size < 100000) then tot + size else tot
-    }
+  override def answer1 (input :Seq[String]) = Directory(input).foldDirs(0) { (tot, dir) =>
+    val size = dir.size
+    if size < 100000 then tot + size else tot
+  }
 
   override def answer2 (input :Seq[String]) =
     val root = Directory(input)
