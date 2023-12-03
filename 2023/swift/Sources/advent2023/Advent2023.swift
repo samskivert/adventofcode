@@ -20,7 +20,7 @@ struct Advent2023 : ParsableCommand {
     let inputB = try tryReadFile("\(prefix)\(day)b.txt") ?? input ?? [""]
     switch day {
     case 1: try compute(day, Day1(), inputA, inputB)
-    // case 2: try compute(day, Day2())
+    case 2: try compute(day, Day2(), inputA, inputB)
     // case 3: try compute(day, Day3())
     // case 4: try compute(day, Day4())
     // case 5: try compute(day, Day5())

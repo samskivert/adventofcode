@@ -18,6 +18,10 @@ extension String {
     if let idx = self.firstIndex(of: c) { return self.distance(from: self.startIndex, to: idx) }
     else { return nil }
   }
+
+  func splitAndTrim (_ sep :String) -> [String] {
+    self.components(separatedBy: sep).map({ $0.trimmingCharacters(in: .whitespacesAndNewlines) })
+  }
 }
 
 extension Array {
