@@ -32,7 +32,7 @@ struct Day1 : Day {
     indices.firstNonNil({ start in
       for (digit, value) in digitWords {
         if let end = line.index(start, offsetBy: digit.count, limitedBy: line.endIndex) {
-          if (line[start ..< end] == digit) { return value }
+          if line[start ..< end] == digit { return value }
         }
       }
       return nil
