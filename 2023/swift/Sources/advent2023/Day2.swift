@@ -1,15 +1,15 @@
 struct Day2 : Day {
 
   func parseGame ( _ input :String) -> (Int, String) {
-    let parts = input.splitAndTrim(":")
-    return (Int(parts[0].splitAndTrim(" ")[1])!, parts[1])
+    let parts = input.split(separator: ":")
+    return (Int(parts[0].after(" "))!, String(parts[1]))
   }
 
   func foldGame<Z> (_ z :Z, _ rounds :String, _ op :(Z, String, Int) -> Z) -> Z {
-    rounds.splitAndTrim(";").reduce(z, { (z, round) in
-      round.splitAndTrim(",").reduce(z, { (z, draw) in
-        let parts = draw.splitAndTrim(" ")
-        return op(z, parts[1], Int(parts[0])!)
+    rounds.split(separator: ";").reduce(z, { (z, round) in
+      round.split(separator: ",").reduce(z, { (z, draw) in
+        let parts = draw.split(separator: " ")
+        return op(z, String(parts[1]), Int(parts[0])!)
       })
     })
   }

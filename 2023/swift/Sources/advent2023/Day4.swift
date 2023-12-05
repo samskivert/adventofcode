@@ -1,9 +1,9 @@
 struct Day4 : Day {
 
   func matches (_ card :String) -> Int {
-    let nums = card.splitAndTrim(":")[1].replacingOccurrences(of: "  ", with: " ").splitAndTrim("|")
-    let (winners, have) = (nums[0].splitAndTrim(" ").map({ Int($0)! }),
-                           nums[1].splitAndTrim(" ").map({ Int($0)! }))
+    let nums = card.after(": ").split(separator: "|")
+    let (winners, have) = (nums[0].split(separator: " ").map({ Int($0)! }),
+                           nums[1].split(separator: " ").map({ Int($0)! }))
     return winners.reduce(0, { $0 + (have.contains($1) ? 1 : 0) })
   }
 
