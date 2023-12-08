@@ -1,5 +1,4 @@
 import Foundation
-import Algorithms
 
 struct Day1 : Day {
 
