@@ -20,18 +20,18 @@ struct Day5 : Day {
     return n
   }
 
-  func part1 (_ input :[String]) -> String {
+  func part1 (_ input :[String]) -> Int {
     let (seeds, maps) = parse(input)
-    return String(seeds.map({ maps.reduce($0, apply) }).min()!)
+    return seeds.map({ maps.reduce($0, apply) }).min()!
   }
 
-  func part2 (_ input :[String]) -> String {
+  func part2 (_ input :[String]) -> Int {
     let (seeds, maps) = parse(input)
     let rmaps = maps.map({ $0.map({ t in (t.1, t.0, t.2) }) }).reversed()
     let ranges = Array(seeds.adjacentPairs().striding(by: 2).map({ $0 ..< ($0+$1) }))
-    return String((0...).first(where: { loc in
+    return (0...).first(where: { loc in
       let seed = rmaps.reduce(loc, apply)
       return ranges.contains(where: { $0.contains(seed) })
-    })!)
+    })!
   }
 }

@@ -6,13 +6,13 @@ struct Day1 : Day {
     digits.reduce(0, { (s, d) in s + d.0*10 + d.1 })
   }
 
-  func part1 (_ input :[String]) -> String {
+  func part1 (_ input :[String]) -> Int {
     let digitSet = CharacterSet.decimalDigits
     let digits = input.map { line in
       (Int(line.unicodeScalars.first(where: { digitSet.contains($0) })!.value - 48),
        Int(line.unicodeScalars.last(where: { digitSet.contains($0) })!.value - 48))
     }
-    return String(sumCombined(digits))
+    return sumCombined(digits)
   }
 
   let digitWords = [
@@ -38,9 +38,9 @@ struct Day1 : Day {
     }) ?? 0
   }
 
-  func part2 (_ input :[String]) -> String {
-    String(sumCombined(input.map { line in
+  func part2 (_ input :[String]) -> Int {
+    sumCombined(input.map { line in
       (findDigit(line.indices, line), findDigit(line.indices.reversed(), line))
-    }))
+    })
   }
 }

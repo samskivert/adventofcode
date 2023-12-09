@@ -55,6 +55,6 @@ struct Day7 : Day {
     return sorted.enumerated().map({ (n, hb) in (n+1)*hb.1 }).reduce(0, +)
   }
 
-  func part1 (_ input :[String]) -> String { String(winnings(input, false)) }
-  func part2 (_ input :[String]) -> String { String(winnings(input, true)) }
+  func part1 (_ input :[String]) -> Int { winnings(input, false) }
+  func part2 (_ input :[String]) -> Int { winnings(input, true) }
 }

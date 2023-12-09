@@ -5,14 +5,14 @@ struct Day6 : Day {
     return race.0+1 - 2*losses
   }
 
-  func part1 (_ input :[String]) -> String {
+  func part1 (_ input :[String]) -> Int {
     let parse = { (line :String) in line.after(": ").split(separator: " ").map({ Int($0)! }) }
-    return String(zip(parse(input[0]), parse(input[1])).map(wins).reduce(1, *))
+    return zip(parse(input[0]), parse(input[1])).map(wins).reduce(1, *)
   }
 
-  func part2 (_ input :[String]) -> String {
+  func part2 (_ input :[String]) -> Int {
     let parse = { (line :String) in
       Int(String(line.after(": ")).replacingOccurrences(of: " ", with: ""))! }
-    return String(wins((parse(input[0]), parse(input[1]))))
+    return wins((parse(input[0]), parse(input[1])))
   }
 }

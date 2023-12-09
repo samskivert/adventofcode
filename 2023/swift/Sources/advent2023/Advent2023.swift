@@ -1,8 +1,10 @@
 import ArgumentParser
 
 protocol Day {
-  func part1 (_ input :[String]) -> String
-  func part2 (_ input :[String]) -> String
+  associatedtype R1
+  associatedtype R2
+  func part1 (_ input :[String]) -> R1
+  func part2 (_ input :[String]) -> R2
 }
 
 @main
@@ -33,7 +35,7 @@ struct Advent2023 : ParsableCommand {
     }
   }
 
-  func compute (_ dayNo :Int, _ day :Day, _ inputA :[String], _ inputB :[String]) throws {
+  func compute (_ dayNo :Int, _ day :any Day, _ inputA :[String], _ inputB :[String]) throws {
     print("Day \(dayNo), part 1: \(day.part1(inputA))")
     print("Day \(dayNo), part 2: \(day.part2(inputB))")
   }
