@@ -7,11 +7,11 @@ struct Day4 : Day {
     return winners.reduce(0, { $0 + (have.contains($1) ? 1 : 0) })
   }
 
-  func part1 (_ input :[String]) throws -> String {
+  func part1 (_ input :[String]) -> String {
     String(input.map({ 1 << (matches($0) - 1) }).reduce(0, +))
   }
 
-  func part2 (_ input :[String]) throws -> String {
+  func part2 (_ input :[String]) -> String {
     let matches = input.map(matches)
     var counts = Array(repeating: 1, count: input.count)
     for ii in 0 ..< matches.count {

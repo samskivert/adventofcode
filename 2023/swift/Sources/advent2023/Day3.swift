@@ -40,11 +40,11 @@ struct Day3 : Day {
     })
   }
 
-  func part1 (_ input :[String]) throws -> String {
+  func part1 (_ input :[String]) -> String {
     String(parts(input).map({ $0.1 }).reduce(0, +))
   }
 
-  func part2 (_ input :[String]) throws -> String {
+  func part2 (_ input :[String]) -> String {
     let parts = parts(input)
     return String(positions(input).reduce(0, { (sum, pos) in
       if charAt(input, pos) != "*" { return sum }

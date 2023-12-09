@@ -6,7 +6,7 @@ struct Day1 : Day {
     digits.reduce(0, { (s, d) in s + d.0*10 + d.1 })
   }
 
-  func part1 (_ input :[String]) throws -> String {
+  func part1 (_ input :[String]) -> String {
     let digitSet = CharacterSet.decimalDigits
     let digits = input.map { line in
       (Int(line.unicodeScalars.first(where: { digitSet.contains($0) })!.value - 48),
@@ -38,7 +38,7 @@ struct Day1 : Day {
     }) ?? 0
   }
 
-  func part2 (_ input :[String]) throws -> String {
+  func part2 (_ input :[String]) -> String {
     String(sumCombined(input.map { line in
       (findDigit(line.indices, line), findDigit(line.indices.reversed(), line))
     }))

@@ -21,7 +21,7 @@ struct Day8 : Day {
     }
   }
 
-  func part1 (_ input :[String]) throws -> String {
+  func part1 (_ input :[String]) -> String {
     let (turns, graph) = parse(input)
     return String(traverse(graph, turns, "AAA"))
   }
@@ -29,7 +29,7 @@ struct Day8 : Day {
   // this is very not general, but the provided data results in each *A node arriving at a *Z node
   // after a whole number of cycles through the turn list and looping precisely from there; so we
   // can cut all sorts of corners
-  func part2 (_ input :[String]) throws -> String {
+  func part2 (_ input :[String]) -> String {
     let (turns, graph) = parse(input)
     let steps = graph.keys.filter({ $0.last == "A" }).map({ traverse(graph, turns, $0) })
     return String(steps.reduce(1, { $0 * $1/turns.count }) * turns.count)
