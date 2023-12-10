@@ -11,6 +11,7 @@ struct Day10 : Day {
     let x :Int
     let y :Int
     var description :String { "+\(x)+\(y)" }
+    var next :Pos { Pos(x: x+1, y: y) }
     func neighbor (_ dir :Dir) -> Pos {
       Pos(x: (dir == .E ? x+1 : dir == .W ? x-1 : x),
           y: (dir == .N ? y-1 : dir == .S ? y+1 : y))
@@ -85,27 +86,24 @@ struct Day10 : Day {
     let rim = fold(pipe, start, Set([start]), { (seen, a, b) in seen.union([a, b]) })
     let wid = input[0].count, hei = input.count
     // test if a point is inside by counting crosses of the rim
-    func inside (_ pos :(Int, Int)) -> Bool {
-      if rim.contains(Pos(x: pos.0, y: pos.1)) { return false }
-      var crosses = 0, x = pos.0+1
-      let curpos = { () in Pos(x: x, y: pos.1) }
-      while x < wid {
-        let p = curpos()
-        x += 1
+    func inside (_ pos :Pos) -> Bool {
+      if rim.contains(pos) { return false }
+      var crosses = 0, p = pos.next
+      while p.x < wid {
         if rim.contains(p) {
           crosses += 1
-          let sp = pipe(p)
           // uncount horizontal edges if they're ┏━┓ or ┗━┛ but not ┏━┛ or ┗━┓
+          let sp = pipe(p)
           if sp != .NS {
-            while pipe(curpos()) == .EW { x += 1 }
-            let ep = pipe(curpos())
+            repeat { p = p.next } while pipe(p) == .EW
+            let ep = pipe(p)
             if sp == .SE && ep == .SW || sp == .NE && ep == .NW { crosses -= 1 }
-            x += 1
           }
         }
+        p = p.next
       }
       return crosses % 2 == 1
     }
-    return product(0 ..< wid, 0 ..< hei).filter(inside).count
+    return product(0 ..< wid, 0 ..< hei).filter({ inside(Pos(x: $0, y: $1)) }).count
   }
 }
