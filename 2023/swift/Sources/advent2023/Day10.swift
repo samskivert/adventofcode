@@ -90,16 +90,9 @@ struct Day10 : Day {
       if rim.contains(pos) { return false }
       var crosses = 0, p = pos.next
       while p.x < wid {
-        if rim.contains(p) {
-          crosses += 1
-          // uncount horizontal edges if they're ┏━┓ or ┗━┛ but not ┏━┛ or ┗━┓
-          let sp = pipe(p)
-          if sp != .NS {
-            repeat { p = p.next } while pipe(p) == .EW
-            let ep = pipe(p)
-            if sp == .SE && ep == .SW || sp == .NE && ep == .NW { crosses -= 1 }
-          }
-        }
+        // to avoid counting ┏━┓ and ┗━┛, we only count ┃, ┛ and ┗ as crossings;
+        // thus ┗━┛ is two crossings and ┏━┓ is zero, but ┃, ┏━┛ and ┗━┓ are 1
+        if rim.contains(p) && pipe(p).ends[0] == .N { crosses += 1 }
         p = p.next
       }
       return crosses % 2 == 1
