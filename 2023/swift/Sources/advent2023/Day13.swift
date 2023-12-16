@@ -35,10 +35,10 @@ struct Day13 : Day {
   }
 
   func part1 (_ input :[String]) -> Int {
-    parse(input).map({ rks in check(rks, 1, -1) ?? check(transpose(rks), 100, -1)! }).reduce(0, +)
+    parse(input).sum(by: { rks in check(rks, 1, -1) ?? check(transpose(rks), 100, -1)! })
   }
 
   func part2 (_ input :[String]) -> Int {
-    parse(input).map({ rks in fixcheck(rks, 1) ?? fixcheck(transpose(rks), 100)! }).reduce(0, +)
+    parse(input).sum(by: { rks in fixcheck(rks, 1) ?? fixcheck(transpose(rks), 100)! })
   }
 }

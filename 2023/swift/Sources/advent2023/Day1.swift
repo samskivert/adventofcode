@@ -2,9 +2,7 @@ import Foundation
 
 struct Day1 : Day {
 
-  func sumCombined (_ digits :[(Int, Int)]) -> Int {
-    digits.reduce(0, { (s, d) in s + d.0*10 + d.1 })
-  }
+  func sumCombined (_ digits :[(Int, Int)]) -> Int { digits.sum(by: { d in d.0*10 + d.1 }) }
 
   func part1 (_ input :[String]) -> Int {
     let digitSet = CharacterSet.decimalDigits

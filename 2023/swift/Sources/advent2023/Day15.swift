@@ -3,7 +3,7 @@ struct Day15 : Day {
   let hash = { (s :String) in s.unicodeScalars.reduce(0, { h, c in ((h + Int(c.value)) * 17) % 256 }) }
 
   func part1 (_ input :[String]) -> Int {
-    input[0].components(separatedBy: ",").map(hash).reduce(0, +)
+    input[0].components(separatedBy: ",").sum(by: hash)
   }
 
   func part2 (_ input :[String]) -> Int {
@@ -20,8 +20,8 @@ struct Day15 : Day {
       }
     }
     func power (_ m :Int, _ bs :[(String, Int)]) -> Int {
-      bs.enumerated().map({ li, ll in ll.1 * (li+1) * m }).reduce(0, +)
+      bs.enumerated().sum(by: { li, ll in ll.1 * (li+1) * m })
     }
-    return boxes.enumerated().map({ bi, bs in power(bi+1, bs) }).reduce(0, +)
+    return boxes.enumerated().sum(by: { bi, bs in power(bi+1, bs) })
   }
 }

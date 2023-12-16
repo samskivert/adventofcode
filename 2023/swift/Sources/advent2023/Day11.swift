@@ -17,7 +17,7 @@ struct Day11 : Day {
 
   func dist (_ g1 :(Int, Int), _ g2 : (Int, Int)) -> Int { abs(g1.0-g2.0) + abs(g1.1-g2.1) }
   func sumdists (_ galaxies :[(Int, Int)]) -> Int {
-    galaxies.combinations(ofCount: 2).map({ dist($0[0], $0[1]) }).reduce(0, +)
+    galaxies.combinations(ofCount: 2).sum(by: { dist($0[0], $0[1]) })
   }
 
   func part1 (_ input :[String]) -> Int { sumdists(shift(parse(input), 1)) }

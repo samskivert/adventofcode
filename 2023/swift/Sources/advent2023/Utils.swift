@@ -53,3 +53,8 @@ extension Array {
     return lo
   }
 }
+
+extension Sequence {
+
+  func sum (by :(Element) -> Int) -> Int { reduce(0, { $0 + by($1) }) }
+}

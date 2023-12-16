@@ -36,7 +36,7 @@ struct Day14 : Day {
     input.map { $0.unicodeScalars.map { Cell(rawValue: $0)! }}
   }
   func load (_ grid :[[Cell]]) -> Int {
-    grid.enumerated().map({ r, l in l.filter({ $0 == .Round }).count * (grid.count-r) }).reduce(0, +)
+    grid.enumerated().sum(by: { r, l in l.filter({ $0 == .Round }).count * (grid.count-r) })
   }
 
   func part1 (_ input :[String]) -> Int { load(slide(parse(input), 0, 1)) }

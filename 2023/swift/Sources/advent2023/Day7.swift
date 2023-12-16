@@ -52,7 +52,7 @@ struct Day7 : Day {
 
   func winnings (_ input :[String], _ two :Bool) -> Int {
     let sorted = input.map(parse).sorted(by: { (a, b) in lessThan(a.0, b.0, two) })
-    return sorted.enumerated().map({ (n, hb) in (n+1)*hb.1 }).reduce(0, +)
+    return sorted.enumerated().sum(by: { (n, hb) in (n+1)*hb.1 })
   }
 
   func part1 (_ input :[String]) -> Int { winnings(input, false) }

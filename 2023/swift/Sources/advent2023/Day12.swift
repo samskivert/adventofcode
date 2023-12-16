@@ -42,12 +42,12 @@ struct Day12 : Day {
   }
 
   func process (_ input :[String], _ unfolds :Int) -> Int {
-    input.map({ line in
+    input.sum(by: { line in
       let parts = line.components(separatedBy: " ")
       let springs = unfold(parts[0], "?", unfolds).unicodeScalars.map { Spring(rawValue: $0)! }
       let groups = unfold(parts[1], ",", unfolds).components(separatedBy: ",").map { Int($0)! }
       return count(springs, groups)
-    }).reduce(0, +)
+    })
   }
 
   func part1 (_ input :[String]) -> Int { process(input, 1) }

@@ -48,7 +48,7 @@ struct Day16 : Day {
   func energize (_ cells :[[Cell]], _ start :(Int, Int, Dir)) -> Int {
     var mcells = cells, beams = [start]
     while beams.count > 0 { propagate(&beams, &mcells) }
-    return mcells.reduce(0, { s, r in r.reduce(s, { s, c in s + (c.entries == 0 ? 0 : 1)}) })
+    return mcells.sum(by: { $0.sum(by: { ($0.entries == 0 ? 0 : 1)}) })
   }
 
   func parse (_ input :[String]) -> [[Cell]] {

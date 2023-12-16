@@ -19,7 +19,7 @@ struct Day2 : Day {
     let (gameId, rounds) = parseGame(input)
     return foldGame(true, rounds, { $0 && $2 <= maxDraws[$1]! }) ? gameId : 0;
   }
-  func part1 (_ input :[String]) -> Int { input.map(checkGame).reduce(0, +) }
+  func part1 (_ input :[String]) -> Int { input.sum(by: checkGame) }
 
   func gamePower (_ input :String) -> Int {
     var maxCubes = ["red": 0, "green": 0, "blue": 0]
@@ -28,5 +28,5 @@ struct Day2 : Day {
     })
     return maxCubes.values.reduce(1, *)
   }
-  func part2 (_ input :[String]) -> Int { input.map(gamePower).reduce(0, +) }
+  func part2 (_ input :[String]) -> Int { input.sum(by: gamePower) }
 }

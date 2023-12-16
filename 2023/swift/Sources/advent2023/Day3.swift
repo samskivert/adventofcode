@@ -40,14 +40,14 @@ struct Day3 : Day {
     })
   }
 
-  func part1 (_ input :[String]) -> Int { parts(input).map({ $0.1 }).reduce(0, +) }
+  func part1 (_ input :[String]) -> Int { parts(input).sum(by: { $0.1 }) }
 
   func part2 (_ input :[String]) -> Int {
     let parts = parts(input)
-    return positions(input).reduce(0, { (sum, pos) in
-      if charAt(input, pos) != "*" { return sum }
+    return positions(input).sum(by: { pos in
+      if charAt(input, pos) != "*" { return 0 }
       let aparts = parts.filter({ pp in pp.2.contains(pos) })
-      return sum + (aparts.count == 2 ? aparts.map({ $0.1 }).reduce(1, *) : 0)
+      return (aparts.count == 2 ? aparts.map({ $0.1 }).reduce(1, *) : 0)
     })
   }
 }
