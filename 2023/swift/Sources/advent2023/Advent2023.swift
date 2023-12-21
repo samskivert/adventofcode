@@ -10,12 +10,17 @@ protocol Day {
 @main
 struct Advent2023 : ParsableCommand {
   @Argument(help: "The number of the day to run.")
-  var day :Int = 1
+  var day :Int = 0
 
   @Flag(name: [.long, .customShort("e")], help: "Use example data rather than real data.")
   var example = false
 
   mutating func run () throws {
+    if day > 0 { try runDay(day, example) }
+    else { for dd in 1 ... 25 { try runDay(dd, example) }}
+  }
+
+  func runDay (_ day :Int, _ example :Bool) throws {
     let prefix = example ? "Input/example" : "Input/day"
     let input = try tryReadFile("\(prefix)\(day).txt")
     let inputA = try tryReadFile("\(prefix)\(day)a.txt") ?? input ?? [""]
@@ -41,6 +46,7 @@ struct Advent2023 : ParsableCommand {
     case 18: try compute(day, Day18(), inputA, inputB)
     case 19: try compute(day, Day19(), inputA, inputB)
     case 20: try compute(day, Day20(), inputA, inputB)
+    case 21: try compute(day, Day21(), inputA, inputB)
     default:
       print("No solution for day \(day) yet.")
     }
