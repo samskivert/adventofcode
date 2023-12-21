@@ -80,15 +80,17 @@ struct Day20 : Day {
 
   func part2 (_ input :[String]) -> Int {
     var mods = parse(input), lows = 0, highs = 0, presses = 1, pxsigs = [String]()
-    let (pxn, pxm) = mods.first(where: { $0.1.outputs.contains("rx") })!
-    var pxps = [String: Int]()
-    while true {
-      propagate(&mods, &lows, &highs, pxn, &pxsigs)
-      for pxsig in pxsigs {
-        if pxps[pxsig] == nil { pxps[pxsig] = presses }
-        if pxps.count == pxm.inputs { return pxps.values.reduce(1, *) }
+    if let (pxn, pxm) = mods.first(where: { $0.1.outputs.contains("rx") }) {
+      var pxps = [String: Int]()
+      while true {
+        propagate(&mods, &lows, &highs, pxn, &pxsigs)
+        for pxsig in pxsigs {
+          if pxps[pxsig] == nil { pxps[pxsig] = presses }
+          if pxps.count == pxm.inputs { return pxps.values.reduce(1, *) }
+        }
+        presses += 1
       }
-      presses += 1
     }
+    return 0
   }
 }
