@@ -38,6 +38,7 @@ struct Advent2023 : ParsableCommand {
     case 15: try compute(day, Day15(), inputA, inputB)
     case 16: try compute(day, Day16(), inputA, inputB)
     case 17: try compute(day, Day17(), inputA, inputB)
+    case 18: try compute(day, Day18(), inputA, inputB)
     default:
       print("No solution for day \(day) yet.")
     }
