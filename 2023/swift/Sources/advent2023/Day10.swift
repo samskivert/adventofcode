@@ -20,7 +20,8 @@ struct Day10 : Day {
     case NS = "|", EW = "-", NE = "L", NW = "J", SW = "7", SE = "F", G = ".", S = "S"
     var ends :[Dir] { Self.ends[self]! }
     private static let ends :[Pipe: [Dir]] = [
-      .NS: [.N, .S], .EW: [.E, .W], .NE: [.N, .E], .NW: [.N, .W], .SW: [.S, .W], .SE: [.E, .S]
+      .NS: [.N, .S], .EW: [.E, .W], .NE: [.N, .E], .NW: [.N, .W], .SW: [.S, .W], .SE: [.E, .S],
+      .G: []
     ]
   }
 
