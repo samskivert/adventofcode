@@ -23,6 +23,15 @@ extension StringProtocol {
     if let range = self.range(of: sep) { return self[range.upperBound...] }
     return self[self.startIndex...]
   }
+
+  func split2 (_ sep :String) -> (String, String) {
+    let parts = self.components(separatedBy: sep)
+    return (parts[0], parts[1])
+  }
+
+  func splitInts (_ sep :String) -> [Int] {
+    self.components(separatedBy: sep).map { Int($0)! }
+  }
 }
 
 extension Array {

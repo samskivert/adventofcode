@@ -25,8 +25,8 @@ struct Day19 : Day {
     static func parse (_ rule :String) -> Rule {
       let idx = vars.firstIndex(of: rule.first!)!
       let gt = rule.dropFirst().first! == ">"
-      let bits = rule.dropFirst(2).components(separatedBy: ":")
-      return Rule(idx, gt, Int(bits[0])!, bits[1])
+      let (nstr, dest) = rule.dropFirst(2).split2(":")
+      return Rule(idx, gt, Int(nstr)!, dest)
     }
     private static let vars :[Character] = ["x", "m", "a", "s"]
   }
@@ -52,9 +52,9 @@ struct Day19 : Day {
     }
 
     static func parse (_ flows :String) -> (String, Flow) {
-      let outer = flows.components(separatedBy: "{")
-      let inner = outer[1].dropLast().components(separatedBy: ",")
-      return (outer[0], Flow(rules: inner.dropLast().map(Rule.parse), other: inner.last!))
+      let (name, rules) = flows.dropLast().split2("{")
+      let inner = rules.components(separatedBy: ",")
+      return (name, Flow(rules: inner.dropLast().map(Rule.parse), other: inner.last!))
     }
   }
 
@@ -79,7 +79,7 @@ struct Day19 : Day {
 
   func parse (_ input :[String]) -> ([String: Flow], [[Int]]) {
     let parts = input.split(separator: "")
-    func parseVar (_ varstr :String) -> Int { Int(varstr.components(separatedBy: "=")[1])! }
+    func parseVar (_ varstr :String) -> Int { Int(varstr.split2("=").1)! }
     func parsePart (_ part :String) -> [Int] {
       part.dropFirst().dropLast().components(separatedBy: ",").map(parseVar)
     }

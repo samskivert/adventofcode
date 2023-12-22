@@ -59,8 +59,8 @@ struct Day20 : Day {
 
   func parse (_ input :[String]) -> [String: Module] {
     let pairs = input.map {
-      let bits = $0.components(separatedBy: " -> ")
-      return (bits[0], bits[1].components(separatedBy: ", "))
+      let (name, outputs) = $0.split2(" -> ")
+      return (name, outputs.components(separatedBy: ", "))
     }
     return Dictionary(uniqueKeysWithValues: pairs.map { pp in
       let name = String(pp.0.dropFirst())
