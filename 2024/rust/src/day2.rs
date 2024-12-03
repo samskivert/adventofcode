@@ -1,4 +1,4 @@
-fn parse(input: String) -> Vec<Vec<u32>> {
+fn parse(input: &String) -> Vec<Vec<u32>> {
     input
         .lines()
         .map(|line| line.split(' ').map(|a| a.parse().unwrap()).collect())
@@ -17,7 +17,7 @@ fn safe(report: &Vec<u32>) -> bool {
         && pairs(report).all(|(a, b)| safe_diff(u32::abs_diff(a, b)))
 }
 
-pub fn part1(input: String) -> String {
+pub fn part1(input: &String) -> String {
     parse(input).iter().filter(|&r| safe(r)).count().to_string()
 }
 
@@ -36,7 +36,7 @@ pub fn safe_damped(report: &Vec<u32>) -> bool {
     false
 }
 
-pub fn part2(input: String) -> String {
+pub fn part2(input: &String) -> String {
     parse(input)
         .iter()
         .filter(|&r| safe_damped(r))

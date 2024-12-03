@@ -22,8 +22,8 @@ fn main() {
 
     let contents = std::fs::read_to_string(&filename).expect("Could not read input file");
     let (answer1, answer2) = match args.day {
-        1 => (day1::part1(contents.clone()), day1::part2(contents)),
-        2 => (day2::part1(contents.clone()), day2::part2(contents)),
+        1 => (day1::part1(&contents), day1::part2(&contents)),
+        2 => (day2::part1(&contents), day2::part2(&contents)),
         _ => panic!("Day {} not implemented", args.day),
     };
 

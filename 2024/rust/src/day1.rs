@@ -1,4 +1,4 @@
-fn parse(input: String) -> (Vec<u32>, Vec<u32>) {
+fn parse(input: &String) -> (Vec<u32>, Vec<u32>) {
     let pairs = input.lines().map(|line| {
         let (a, b) = line.split_once(' ').unwrap();
         (a.parse().unwrap(), b.trim().parse().unwrap())
@@ -8,7 +8,7 @@ fn parse(input: String) -> (Vec<u32>, Vec<u32>) {
     (lefts, rights)
 }
 
-pub fn part1(input: String) -> String {
+pub fn part1(input: &String) -> String {
     let (mut left, mut right) = parse(input);
     left.sort();
     right.sort();
@@ -19,7 +19,7 @@ pub fn part1(input: String) -> String {
         .to_string()
 }
 
-pub fn part2(input: String) -> String {
+pub fn part2(input: &String) -> String {
     let (left, right) = parse(input);
     left.iter()
         .map(|&a| a * right.iter().copied().filter(|&b| b == a).count() as u32)
