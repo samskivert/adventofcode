@@ -14,7 +14,7 @@ pub fn part1(input: String) -> String {
     right.sort();
     left.iter()
         .zip(right.iter())
-        .map(|(a, b)| u32::abs_diff(*a, *b))
+        .map(|(&a, &b)| u32::abs_diff(a, b))
         .sum::<u32>()
         .to_string()
 }
@@ -22,7 +22,7 @@ pub fn part1(input: String) -> String {
 pub fn part2(input: String) -> String {
     let (left, right) = parse(input);
     left.iter()
-        .map(|a| *a * right.iter().copied().filter(|b| *b == *a).count() as u32)
+        .map(|&a| a * right.iter().copied().filter(|&b| b == a).count() as u32)
         .sum::<u32>()
         .to_string()
 }
