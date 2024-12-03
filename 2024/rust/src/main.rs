@@ -1,4 +1,4 @@
-use advent2024::{day1, day2};
+use advent2024::{day1, day2, day3};
 use clap::Parser;
 
 #[derive(Parser)]
@@ -11,20 +11,31 @@ struct Cli {
     example: bool,
 }
 
+const DAYS: [(fn(&str) -> String, fn(&str) -> String); 3] = [
+    (day1::part1, day1::part2),
+    (day2::part1, day2::part2),
+    (day3::part1, day3::part2),
+];
+
 fn main() {
     let args = Cli::parse();
+    if (args.day as usize) > DAYS.len() {
+        panic!("Day {} not implemented", args.day);
+    }
+    let (day_a, day_b) = DAYS[args.day as usize - 1];
 
-    let filename = if args.example {
-        format!("input/example{}.txt", args.day)
-    } else {
-        format!("input/day{}.txt", args.day)
-    };
+    let basename = if args.example { "example" } else { "day" };
+    let filename = |suffix: &str| format!("input/{}{}{}.txt", basename, args.day, suffix);
 
-    let contents = std::fs::read_to_string(&filename).expect("Could not read input file");
-    let (answer1, answer2) = match args.day {
-        1 => (day1::part1(&contents), day1::part2(&contents)),
-        2 => (day2::part1(&contents), day2::part2(&contents)),
-        _ => panic!("Day {} not implemented", args.day),
+    let (answer1, answer2) = match std::fs::read_to_string(&filename("")) {
+        Ok(contents) => (day_a(&contents), day_b(&contents)),
+        Err(_) => match std::fs::read_to_string(&filename("a")) {
+            Ok(contents_a) => match std::fs::read_to_string(&filename("b")) {
+                Ok(contents_b) => (day_a(&contents_a), day_b(&contents_b)),
+                Err(_) => panic!("Missing b variant {}", &filename("b")),
+            },
+            Err(_) => panic!("Unable to find input files for day {}", args.day),
+        },
     };
 
     println!("Day {}, part 1: {}", args.day, answer1);
