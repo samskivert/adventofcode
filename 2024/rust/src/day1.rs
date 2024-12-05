@@ -12,11 +12,7 @@ pub fn part1(input: &str) -> String {
     let (mut left, mut right) = parse(input);
     left.sort();
     right.sort();
-    left.iter()
-        .zip(right.iter())
-        .map(|(&a, &b)| u32::abs_diff(a, b))
-        .sum::<u32>()
-        .to_string()
+    left.iter().zip(right.iter()).map(|(&a, &b)| u32::abs_diff(a, b)).sum::<u32>().to_string()
 }
 
 pub fn part2(input: &str) -> String {
