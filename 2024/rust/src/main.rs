@@ -1,4 +1,4 @@
-use advent2024::{day1, day2, day3};
+use advent2024::{day1, day2, day3, day4};
 use clap::Parser;
 
 #[derive(Parser)]
@@ -11,10 +11,11 @@ struct Cli {
     example: bool,
 }
 
-const DAYS: [(fn(&str) -> String, fn(&str) -> String); 3] = [
+const DAYS: [(fn(&str) -> String, fn(&str) -> String); 4] = [
     (day1::part1, day1::part2),
     (day2::part1, day2::part2),
     (day3::part1, day3::part2),
+    (day4::part1, day4::part2),
 ];
 
 fn main() {
