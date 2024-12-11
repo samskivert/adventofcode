@@ -1,4 +1,7 @@
-use advent2024::{day1, day10, day2, day3, day4, day5, day6, day7, day8, day9};
+use advent2024::{
+    day1, day10, day11, day12, day13, day14, day15, day16, day17, day18, day19, day2, day20, day21,
+    day22, day23, day24, day25, day3, day4, day5, day6, day7, day8, day9,
+};
 use clap::Parser;
 
 #[derive(Parser)]
@@ -22,6 +25,21 @@ const DAYS: &[(fn(&str) -> String, fn(&str) -> String)] = &[
     (day8::part1, day8::part2),
     (day9::part1, day9::part2),
     (day10::part1, day10::part2),
+    (day11::part1, day11::part2),
+    (day12::part1, day12::part2),
+    (day13::part1, day13::part2),
+    (day14::part1, day14::part2),
+    (day15::part1, day15::part2),
+    (day16::part1, day16::part2),
+    (day17::part1, day17::part2),
+    (day18::part1, day18::part2),
+    (day19::part1, day19::part2),
+    (day20::part1, day20::part2),
+    (day21::part1, day21::part2),
+    (day22::part1, day22::part2),
+    (day23::part1, day23::part2),
+    (day24::part1, day24::part2),
+    (day25::part1, day25::part2),
 ];
 
 fn main() {
