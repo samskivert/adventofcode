@@ -9,15 +9,16 @@ trait Day (val day :Int):
 val days = Seq[Day](Day1, Day2, Day3, Day4)
 
 @main def advent (day :Int = 1, example :Boolean = false) :Unit =
-  if (days.size >= day) then
-    val dd = days(day-1)
-    println(s"Day $day:")
-    if example then
-      println(s"Example: ${dd.answer1(readFile(dd.example1))} / ${dd.answer2(readFile(dd.example2))}")
-    else
-      println(s"Input: ${dd.answer1(readFile(dd.input1))} / ${dd.answer2(readFile(dd.input2))}")
-  else
+  if (days.size < day) then
     println(s"Day $day not yet implemented.")
+  else
+    val dd = days(day-1)
+    if example then
+      println(s"Day $day*: ${dd.answer1(readFile(dd.example1))} / " +
+              s"${dd.answer2(readFile(dd.example2))}")
+    else
+      println(s"Day $day: ${dd.answer1(readFile(dd.input1))} / " +
+              s"${dd.answer2(readFile(dd.input2))}")
 
 // utilities
 def readFile (name :String) :Seq[String] = classOf[Day].getResourceAsStream(name) match
