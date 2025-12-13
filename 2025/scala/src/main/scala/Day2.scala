@@ -1,6 +1,6 @@
 object Day2 extends Day(2) {
 
-  def readRanges (input :String) :Seq[(Long,Long)] = input.split(",").map { (range) =>
+  def readRanges (input :String) :Seq[(Long,Long)] = input.split(",").toSeq.map { (range) =>
     val Array(low, high) = range.split("-")
     (low.toLong, high.toLong)
   }
