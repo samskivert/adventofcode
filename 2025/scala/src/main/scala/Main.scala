@@ -6,7 +6,7 @@ trait Day (val day :Int):
   def answer1 (input :Seq[String]) :Any
   def answer2 (input :Seq[String]) :Any
 
-val days = Seq[Day](Day1, Day2, Day3, Day4, Day5, Day6, Day7, Day8, Day9, Day10)
+val days = Seq[Day](Day1, Day2, Day3, Day4, Day5, Day6, Day7, Day8, Day9, Day10, Day11)
 
 @main def advent (day :Int = 1, example :Boolean = false) :Unit =
   if (days.size < day) then
